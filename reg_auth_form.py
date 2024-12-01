@@ -20,12 +20,16 @@ class RegAuthForm(QMainWindow):
         self.login_button.setGeometry(QtCore.QRect(610, 290, 171, 81))
         self.login_button.setObjectName("login_button")
         self.login_button.setText('Войти')
+        self.login_button.clicked.connect(lambda: mainwindow.forms_switch('auth'))
         self.registration_button = QtWidgets.QPushButton(self.centralwidget)
         self.registration_button.setGeometry(QtCore.QRect(610, 390, 171, 81))
         self.registration_button.setObjectName("registration_button")
         self.registration_button.setText('Регистрация')
+        self.registration_button.clicked.connect(lambda: mainwindow.forms_switch('reg'))
         mainwindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(mainwindow)
         self.statusbar.setObjectName("statusbar")
         mainwindow.setStatusBar(self.statusbar)
         self.setCentralWidget(self.centralwidget)
+
+

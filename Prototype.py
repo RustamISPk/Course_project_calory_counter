@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QMainWindow, QApplication, QStackedWidget, QVBoxLayout
 from qt_material import apply_stylesheet
-import json
 from auth_form import AuthForm
 from food_diary import FoodDiary
 from food_list import FoodList
@@ -13,6 +12,7 @@ from user_weight_form import UserWeightForm
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.layout = None
         self.stack = None
         self.Widget = None
         self.window7 = None
@@ -22,6 +22,7 @@ class MainWindow(QMainWindow):
         self.window3 = None
         self.window2 = None
         self.window1 = None
+        self.current_user_id = None
         self.UIinit()
 
     def UIinit(self):
@@ -48,6 +49,17 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.Widget)
         self.layout = QVBoxLayout(self.Widget)
         self.layout.addWidget(self.stack)
+
+    def forms_switch(self, data):
+        match data:
+            case 'reg':
+                self.stack.setCurrentWidget(self.window2)
+            case 'auth':
+                self.stack.setCurrentWidget(self.window3)
+            case 'reg_back':
+                self.stack.setCurrentWidget(self.window1)
+            case 'auth_back':
+                self.stack.setCurrentWidget(self.window1)
 
 
 if __name__ == "__main__":
