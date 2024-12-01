@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1378</width>
+    <height>867</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="products_list_back_button">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Назад</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="find_products_button">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
+      <y>10</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Найти</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="find_products_line_edit">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>10</y>
+      <width>991</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QScrollBar" name="verticalScrollBar">
+    <property name="geometry">
+     <rect>
+      <x>1355</x>
+      <y>0</y>
+      <width>21</width>
+      <height>861</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QWidget" name="change_food_mode_widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>50</y>
+      <width>1351</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="products_button">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>671</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Продукты</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="recipes_button">
+     <property name="geometry">
+      <rect>
+       <x>680</x>
+       <y>0</y>
+       <width>671</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Рецепты</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="food_list_widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>150</y>
+      <width>1011</width>
+      <height>691</height>
+     </rect>
+    </property>
+    <widget class="QWidget" name="food_card_widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>1011</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>801</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="food_name_label">
+         <property name="text">
+          <string>Название продукта или рецепта</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="food_calory_label">
+         <property name="text">
+          <string>Калорийность на 100 г</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="food_protein_label">
+         <property name="text">
+          <string>Белки на 100 грамм</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="food_fats_label">
+         <property name="text">
+          <string>Жиры на 100 грамм</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="food_carbohydrates_label">
+         <property name="text">
+          <string>Углеводы на 100 грамм</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="choice_food_button">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>0</y>
+        <width>211</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Добавить</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="food_to_write_widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>130</y>
+       <width>441</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <widget class="QWidget" name="formLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>421</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="food_to_write_name_label">
+         <property name="text">
+          <string>Название продукта/рецепта</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="food_to_write_count_line_edit"/>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QPushButton" name="food_to_write_button">
+         <property name="text">
+          <string>Записать</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

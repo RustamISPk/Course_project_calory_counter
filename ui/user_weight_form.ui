@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1380</width>
+    <height>867</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="IMT_widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1371</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="menu_button">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>151</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Меню</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Tittle_IMT_label">
+     <property name="geometry">
+      <rect>
+       <x>154</x>
+       <y>10</y>
+       <width>1211</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Индекс массы тела</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>90</y>
+       <width>771</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLineEdit" name="height_line_edit">
+          <property name="text">
+           <string>Введите ваш рост</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="weight_line_edit">
+          <property name="text">
+           <string>Введите ваш вес</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="IMT_count_button">
+          <property name="text">
+           <string>PushButton</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Ваш индекс массы тела - </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>от 18,5 до 24,9 - нормальный вес
+от 25 до 29,9 - избыточный вес
+от 30 - ожирение</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="user_height_statistic" native="true">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>270</y>
+      <width>1371</width>
+      <height>581</height>
+     </rect>
+    </property>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>4</x>
+       <y>9</y>
+       <width>1361</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Статистика веса</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>50</y>
+       <width>1371</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLineEdit" name="user_new_height_line_edit">
+        <property name="text">
+         <string>Введите ваш текущий вес</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="user_new_height_save_button">
+        <property name="text">
+         <string>Добавить</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="weight_ghraphic_widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>139</y>
+       <width>1361</width>
+       <height>441</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

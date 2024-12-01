@@ -1,0 +1,46 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMainWindow
+
+
+class AddProductForm(QMainWindow):
+    def __init__(self, mainwindow):
+        super().__init__()
+        self.setupUi(mainwindow)
+
+    def setupUi(self, mainwindow):
+        mainwindow.setObjectName("MainWindow")
+        mainwindow.resize(1380, 865)
+        self.centralwidget = QtWidgets.QWidget(mainwindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.menu_button = QtWidgets.QPushButton(self.centralwidget)
+        self.menu_button.setGeometry(QtCore.QRect(0, 0, 121, 51))
+        self.menu_button.setObjectName("menu_button")
+        self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(570, 130, 221, 301))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.add_food_name_line_edit = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.add_food_name_line_edit.setObjectName("add_food_name_line_edit")
+        self.verticalLayout.addWidget(self.add_food_name_line_edit)
+        self.add_food_calory_line_edit = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.add_food_calory_line_edit.setObjectName("add_food_calory_line_edit")
+        self.verticalLayout.addWidget(self.add_food_calory_line_edit)
+        self.add_food_protein_line_edit = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.add_food_protein_line_edit.setObjectName("add_food_protein_line_edit")
+        self.verticalLayout.addWidget(self.add_food_protein_line_edit)
+        self.add_food_fats_line_edit = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.add_food_fats_line_edit.setObjectName("add_food_fats_line_edit")
+        self.verticalLayout.addWidget(self.add_food_fats_line_edit)
+        self.add_food_carbohydrates_line_edit = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.add_food_carbohydrates_line_edit.setObjectName("add_food_carbohydrates_line_edit")
+        self.verticalLayout.addWidget(self.add_food_carbohydrates_line_edit)
+        self.add_food_save_button = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.add_food_save_button.setObjectName("add_food_save_button")
+        self.verticalLayout.addWidget(self.add_food_save_button)
+        mainwindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(mainwindow)
+        self.statusbar.setObjectName("statusbar")
+        mainwindow.setStatusBar(self.statusbar)
+        self.setCentralWidget(self.centralwidget)
