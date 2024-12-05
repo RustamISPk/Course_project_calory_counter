@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QLineEdit, QPushButton, QStatusBar, QWidget, QFormLayout, QLabel, QScrollBar
+from left_menu import LeftMenu
 
 
 class FoodDiary(QMainWindow):
@@ -31,6 +32,7 @@ class FoodDiary(QMainWindow):
         self.formLayoutWidget = None
         self.menu_button = None
         self.centralwidget = None
+        self.left_menu = None
         self.setupUi(mainwindow)
 
     def setupUi(self, mainwindow):
@@ -39,10 +41,14 @@ class FoodDiary(QMainWindow):
         self.centralwidget = QWidget(mainwindow)
         self.centralwidget.setObjectName("centralwidget")
 
+        self.left_menu = LeftMenu(self)
+        self.left_menu.hide()
+
         self.menu_button = QPushButton(self.centralwidget)
         self.menu_button.setGeometry(QtCore.QRect(0, 0, 151, 81))
         self.menu_button.setObjectName("menu_button")
         self.menu_button.setText("Меню")
+        self.menu_button.clicked.connect(lambda: self.show_left_menu())
 
         self.formLayoutWidget = QWidget(self.centralwidget)
         self.formLayoutWidget.setGeometry(QtCore.QRect(1160, 10, 161, 131))
@@ -129,3 +135,12 @@ class FoodDiary(QMainWindow):
         self.statusbar.setObjectName("statusbar")
         mainwindow.setStatusBar(self.statusbar)
         self.setCentralWidget(self.centralwidget)
+
+    def show_left_menu(self):
+        self.left_menu.show()
+        self.left_menu.raise_()
+        self.menu_button.hide()
+
+    def hide_left_menu(self):
+        self.left_menu.hide()
+        self.menu_button.show()
