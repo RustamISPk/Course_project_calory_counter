@@ -60,6 +60,8 @@ class MainWindow(QMainWindow):
                 self.stack.setCurrentWidget(self.window1)
             case 'auth_back':
                 self.stack.setCurrentWidget(self.window1)
+            case 'food_diary':
+                self.stack.setCurrentWidget(self.window4)
 
 
 if __name__ == "__main__":

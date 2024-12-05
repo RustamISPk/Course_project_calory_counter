@@ -1,9 +1,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QLineEdit, QWidget, QPushButton, QComboBox, QStatusBar
+from PyQt5.QtCore import QDate
+from PyQt5.QtWidgets import QMainWindow, QLineEdit, QWidget, QPushButton, QComboBox, QStatusBar, QDateEdit
 from database_connection import DatabaseConnection
-from pymysql import connect
-import pymysql
+from PyQt5.QtGui import QIntValidator, QDoubleValidator
 
+# Доработать поле для ввода веса (если длина больше 4, то проверить на наличие точки)
 
 class RegForm(QMainWindow):
     def __init__(self, mainwindow):
@@ -52,20 +53,26 @@ class RegForm(QMainWindow):
         self.person_height_line_edit.setGeometry(QtCore.QRect(530, 410, 331, 41))
         self.person_height_line_edit.setObjectName("person_height_line_edit")
         self.person_height_line_edit.setPlaceholderText('Введите рост')
+        self.person_height_line_edit.setValidator(QIntValidator(1, 272, self))
+        self.person_height_line_edit.setMaxLength(3)
         self.person_weight_line_edit = QLineEdit(self.centralwidget)
+        self.person_weight_line_edit.setMaxLength(6)
         self.person_weight_line_edit.setGeometry(QtCore.QRect(530, 460, 331, 41))
         self.person_weight_line_edit.setObjectName("person_weight_line_edit")
         self.person_weight_line_edit.setPlaceholderText('Введите вес')
-        self.person_age_line_edit = QLineEdit(self.centralwidget)
+        self.person_weight_line_edit.setValidator(QDoubleValidator(1.0, 800.0, 2, self))
+        self.person_age_line_edit = QDateEdit(self.centralwidget)
+        self.person_age_line_edit.setDate(QDate.currentDate())  # Устанавливаем текущую дату по умолчанию
+        self.person_age_line_edit.setDisplayFormat("dd-MM-yyyy")  # Устанавливаем формат отображения даты
+        self.person_age_line_edit.setCalendarPopup(True)
         self.person_age_line_edit.setGeometry(QtCore.QRect(530, 510, 331, 41))
         self.person_age_line_edit.setObjectName("person_age_line_edit")
-        self.person_age_line_edit.setPlaceholderText('Введите дату рождения')
-        self.person_age_line_edit.setInputMask('0000-00-00')
         self.person_password_line_edit = QLineEdit(self.centralwidget)
         self.person_password_line_edit.setGeometry(QtCore.QRect(530, 360, 331, 41))
         self.person_password_line_edit.setObjectName("person_password_line_edit")
         self.person_password_line_edit.setPlaceholderText('Введите пароль')
         self.person_password_line_edit.setMaxLength(45)
+        self.person_password_line_edit.setEchoMode(QLineEdit.Password)
         self.reg_confirm_button = QPushButton(self.centralwidget)
         self.reg_confirm_button.setGeometry(QtCore.QRect(630, 620, 141, 71))
         self.reg_confirm_button.setObjectName("reg_confirm_button")
@@ -73,7 +80,7 @@ class RegForm(QMainWindow):
         self.reg_confirm_button.clicked.connect(lambda: self.confirm_reg(mainwindow))
         self.person_gender_combobox = QComboBox(self.centralwidget)
         self.person_gender_combobox.setGeometry(QtCore.QRect(530, 560, 331, 41))
-        self.person_gender_combobox.setObjectName("person_sex_combobox")
+        self.person_gender_combobox.setObjectName("person_gender_combobox")
         self.person_gender_combobox.addItem("Мужской")
         self.person_gender_combobox.addItem("Женский")
         mainwindow.setCentralWidget(self.centralwidget)
@@ -83,22 +90,25 @@ class RegForm(QMainWindow):
         self.setCentralWidget(self.centralwidget)
 
     def confirm_reg(self, mainwindow):
-        fields_check = self.check_empty_fields
-        if fields_check:
-            name = self.person_name_line_edit.text()
-            surname = self.person_lastname_line_edit.text()
-            login = self.person_login_line_edit.text()
-            password = self.person_password_line_edit.text()
-            height = self.person_height_line_edit.text()
-            weight = self.person_weight_line_edit.text()
-            age = self.person_age_line_edit.text()
-            gender = self.person_gender_combobox.currentText()
-            # print('hello')
-            db = DatabaseConnection()
-            db.save_user_account(name, surname, login, password, height, weight, age, gender)
-            self.back_to_main_window(mainwindow)
-        else:
-            print(fields_check)
+        try:
+            fields_check = self.check_empty_fields
+            if fields_check:
+                name = self.person_name_line_edit.text()
+                surname = self.person_lastname_line_edit.text()
+                login = self.person_login_line_edit.text()
+                password = self.person_password_line_edit.text()
+                height = self.person_height_line_edit.text()
+                weight = self.person_weight_line_edit.text()
+                age = self.person_age_line_edit.text()
+                gender = self.person_gender_combobox.currentText()
+                # print('hello')
+                db = DatabaseConnection()
+                db.save_user_account(name, surname, login, password, height, weight, age, gender)
+                self.back_to_main_window(mainwindow)
+            else:
+                print(fields_check)
+        except Exception as e:
+            print(e)
 
     def check_empty_fields(self):
         name = self.person_name_line_edit.text().isalpha()
@@ -132,7 +142,6 @@ class RegForm(QMainWindow):
                 self.person_weight_line_edit.setPlaceholderText('Заполните поле')
             if age or not check_age_logic:
                 self.person_age_line_edit.setStyleSheet("border: 2px solid red;")
-                self.person_age_line_edit.setPlaceholderText('Заполните поле')
             return False
 
     def check_age(self):
@@ -199,11 +208,13 @@ class RegForm(QMainWindow):
 
         self.person_age_line_edit.setStyleSheet("")
         self.person_age_line_edit.clear()
-        self.person_age_line_edit.setPlaceholderText('Введите возраст')
 
     def back_to_main_window(self, mainwindow):
-        mainwindow.forms_switch('reg_back')
-        self.clear_elements()
+        try:
+            mainwindow.forms_switch('reg_back')
+            self.clear_elements()
+        except Exception as e:
+            print(e)
 
     def is_empty(self, string):
         if len(string) == 0:

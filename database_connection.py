@@ -4,7 +4,7 @@ import pymysql
 from config import host, port, user, passwd, database, user_account_table, user_weight_story_table
 
 
-class DatabaseConnection():
+class DatabaseConnection:
     def __init__(self):
         self.connection = None
         self.test_connection_to_db()
@@ -44,3 +44,12 @@ class DatabaseConnection():
         self.connection.commit()
         print('Данные успешно сохранены')
 
+    def find_user_in_database(self, login, password):
+        with self.connection.cursor() as cursor:
+            insert_query = f"SELECT * FROM user_account WHERE user_login = '{login}' AND user_password = '{password}'"
+            cursor.execute(insert_query)
+            user = cursor.fetchall()
+        if len(user) > 0:
+            return True
+        else:
+            return False
