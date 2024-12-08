@@ -62,6 +62,8 @@ class MainWindow(QMainWindow):
                 self.stack.setCurrentWidget(self.window1)
             case 'food_diary':
                 self.stack.setCurrentWidget(self.window4)
+            case 'food_list':
+                self.stack.setCurrentWidget(self.window5)
 
 
 if __name__ == "__main__":

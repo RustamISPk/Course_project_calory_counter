@@ -95,6 +95,7 @@ class FoodDiary(QMainWindow):
         self.write_food_breakfast_button.setGeometry(QtCore.QRect(0, 80, 1331, 51))
         self.write_food_breakfast_button.setObjectName("write_food_breakfast_button")
         self.write_food_breakfast_button.setText('Добавить')
+        self.write_food_breakfast_button.clicked.connect(lambda: mainwindow.forms_switch('food_list'))
 
         self.lunch_widget = QWidget(self.centralwidget)
         self.lunch_widget.setGeometry(QtCore.QRect(0, 330, 1331, 161))
@@ -110,6 +111,8 @@ class FoodDiary(QMainWindow):
         self.write_food_lunch_button.setGeometry(QtCore.QRect(0, 90, 1331, 51))
         self.write_food_lunch_button.setObjectName("write_food_lunch_button")
         self.write_food_lunch_button.setText('Добавить')
+        self.write_food_lunch_button.clicked.connect(lambda: mainwindow.forms_switch('food_list'))
+
 
         self.dinner_widget = QWidget(self.centralwidget)
         self.dinner_widget.setGeometry(QtCore.QRect(0, 500, 1331, 151))
@@ -125,6 +128,8 @@ class FoodDiary(QMainWindow):
         self.write_food_dinner_button.setGeometry(QtCore.QRect(0, 80, 1331, 51))
         self.write_food_dinner_button.setObjectName("write_food_dinner_button")
         self.write_food_dinner_button.setText('Добавить')
+        self.write_food_dinner_button.clicked.connect(lambda: mainwindow.forms_switch('food_list'))
+
 
         self.verticalScrollBar = QScrollBar(self.centralwidget)
         self.verticalScrollBar.setGeometry(QtCore.QRect(1335, 0, 21, 831))

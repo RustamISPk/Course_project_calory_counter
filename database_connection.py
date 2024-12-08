@@ -53,3 +53,10 @@ class DatabaseConnection:
             return True
         else:
             return False
+
+    def find_all_food(self):
+        with self.connection.cursor() as cursor:
+            insert_query = f"SELECT * FROM product_and_recipe_list"
+            cursor.execute(insert_query)
+            food = cursor.fetchall()
+            return food
