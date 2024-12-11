@@ -1,16 +1,15 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QLineEdit, QScrollBar, QVBoxLayout, QLabel, QFormLayout, \
-    QStatusBar, QListWidget, QListWidgetItem
+from PyQt5.QtGui import QIntValidator
+from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QScrollBar, QVBoxLayout, QLabel, QFormLayout, \
+    QListWidget, QListWidgetItem
 from database_connection import DatabaseConnection
 
 
-# Добавить в базу данных поле в таблицу с продуктами type - продукт или рецепт
-
-class FoodList(QMainWindow):
+class FoodList(QWidget):
     def __init__(self, mainwindow):
         super().__init__()
+        self.db = DatabaseConnection()
         self.list_item = None
-        self.statusbar = None
         self.food_to_write_button = None
         self.food_to_write_count_line_edit = None
         self.food_to_write_name_label = None
@@ -23,42 +22,37 @@ class FoodList(QMainWindow):
         self.food_protein_label = None
         self.food_calory_label = None
         self.food_name_label = None
-        self.verticalLayout = None
-        self.verticalLayoutWidget = None
-        self.food_card_widget = None
         self.food_list_widget = None
         self.recipes_button = None
         self.products_button = None
         self.change_food_mode_widget = None
-        self.verticalScrollBar = None
         self.find_products_line_edit = None
         self.find_products_button = None
         self.products_list_back_button = None
-        self.centralwidget = None
         self.setupUi(mainwindow)
-        self.load_food()
+        self.load_food(mainwindow)
 
     def setupUi(self, mainwindow):
-        mainwindow.setObjectName("MainWindow")
-        mainwindow.resize(1378, 867)
-        self.centralwidget = QWidget(mainwindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.products_list_back_button = QPushButton(self.centralwidget)
+        self.setObjectName("FoodListWidget")
+        self.resize(1378, 867)
+
+        self.products_list_back_button = QPushButton(self)
         self.products_list_back_button.setGeometry(QtCore.QRect(0, 10, 181, 41))
         self.products_list_back_button.setObjectName("products_list_back_button")
+        self.products_list_back_button.clicked.connect(lambda: mainwindow.forms_switch('food_diary'))
         self.products_list_back_button.setText('Назад')
 
-        self.find_products_button = QPushButton(self.centralwidget)
+        self.find_products_button = QPushButton(self)
         self.find_products_button.setGeometry(QtCore.QRect(1170, 10, 181, 41))
         self.find_products_button.setObjectName("find_products_button")
         self.find_products_button.setText('Найти')
 
-        self.find_products_line_edit = QLineEdit(self.centralwidget)
+        self.find_products_line_edit = QLineEdit(self)
         self.find_products_line_edit.setGeometry(QtCore.QRect(180, 10, 991, 41))
         self.find_products_line_edit.setObjectName("find_products_line_edit")
         self.find_products_line_edit.setPlaceholderText('Введите продукт')
 
-        self.change_food_mode_widget = QWidget(self.centralwidget)
+        self.change_food_mode_widget = QWidget(self)
         self.change_food_mode_widget.setGeometry(QtCore.QRect(0, 50, 1351, 101))
         self.change_food_mode_widget.setObjectName("change_food_mode_widget")
 
@@ -72,7 +66,7 @@ class FoodList(QMainWindow):
         self.recipes_button.setObjectName("recipes_button")
         self.recipes_button.setText('Рецепты')
 
-        self.food_list_widget = QListWidget(self.centralwidget)
+        self.food_list_widget = QListWidget(self)
         self.food_list_widget.setGeometry(QtCore.QRect(170, 150, 1011, 691))
         self.food_list_widget.setObjectName("food_list_widget")
 
@@ -89,9 +83,11 @@ class FoodList(QMainWindow):
         self.food_to_write_name_label.setObjectName("food_to_write_name_label")
         self.food_to_write_count_line_edit = QLineEdit(self.formLayoutWidget)
         self.food_to_write_count_line_edit.setObjectName("food_to_write_count_line_edit")
-        self.food_to_write_count_line_edit.setFixedHeight(30)  # Установите фиксированную высоту
+        self.food_to_write_count_line_edit.setFixedHeight(30)
         self.food_to_write_count_line_edit.setPlaceholderText('Количество продукта')
         self.food_to_write_count_line_edit.setVisible(True)
+        self.food_to_write_count_line_edit.setValidator(QIntValidator(1, 5000, self))
+
         self.food_to_write_button = QPushButton(self.formLayoutWidget)
         self.food_to_write_button.setObjectName("food_to_write_button")
         self.food_to_write_button.setText('Добавить')
@@ -102,15 +98,8 @@ class FoodList(QMainWindow):
 
         self.food_to_write_widget.hide()
 
-        mainwindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QStatusBar(mainwindow)
-        self.statusbar.setObjectName("statusbar")
-        mainwindow.setStatusBar(self.statusbar)
-        self.setCentralWidget(self.centralwidget)
-
-    def load_food(self):
-        db = DatabaseConnection()
-        foods = db.find_all_food()
+    def load_food(self, mainwindow):
+        foods = self.db.find_all_food()
         for food in foods:
             food_card_widget = QWidget()
             food_card_widget.setGeometry(QtCore.QRect(0, 0, 1011, 111))
@@ -134,7 +123,7 @@ class FoodList(QMainWindow):
             vertical_layout.addWidget(food_carbohydrates_label)
 
             choice_food_button = QPushButton('Выбрать')
-            choice_food_button.clicked.connect(lambda cheked, food=food: self.choose_food(food))
+            choice_food_button.clicked.connect(lambda checked, food=food: self.choose_food(food, mainwindow))
             vertical_layout.addWidget(choice_food_button)
 
             self.list_item = QListWidgetItem()
@@ -142,9 +131,26 @@ class FoodList(QMainWindow):
             self.food_list_widget.addItem(self.list_item)
             self.food_list_widget.setItemWidget(self.list_item, food_card_widget)
 
-    def choose_food(self, food):
+    def choose_food(self, food, mainwindow):
         self.food_to_write_name_label.setText(f"{food['product_name']}")
         self.food_to_write_widget.hide()
         self.food_to_write_widget.show()
-        print(self.food_to_write_count_line_edit.isVisible())  # Должно быть True
-        print(self.food_to_write_count_line_edit.size())  # Размер не должен быть (0, 0)
+        self.food_to_write_button.clicked.connect(lambda: self.write_eating(mainwindow, food))
+
+    def write_eating(self, mainwindow, food):
+        try:
+            if self.food_to_write_count_line_edit.text() != '':
+                product_id = food['product_id']
+                count = self.food_to_write_count_line_edit.text()
+                eating_type = ''
+                match mainwindow.eating_type:
+                    case 'breakfast':
+                        eating_type = 'breakfast'
+                    case 'lunch':
+                        eating_type = 'lunch'
+                    case 'dinner':
+                        eating_type = 'dinner'
+                self.db.write_eating_db(user_id=mainwindow.current_user_id, product_id=product_id,
+                                        product_count=count, eating_type=eating_type)
+        except Exception as e:
+            print(e)

@@ -23,6 +23,9 @@ class MainWindow(QMainWindow):
         self.window2 = None
         self.window1 = None
         self.current_user_id = None
+        self.eating_type = None
+        self.current_date = None
+        foods = self.db.find_all_food()
         self.UIinit()
 
     def UIinit(self):
@@ -61,10 +64,32 @@ class MainWindow(QMainWindow):
             case 'auth_back':
                 self.stack.setCurrentWidget(self.window1)
             case 'food_diary':
+                self.stack.removeWidget(self.window4)
+                self.window4.deleteLater()
+                self.window4 = FoodDiary(self)
+                self.stack.addWidget(self.window4)
                 self.stack.setCurrentWidget(self.window4)
-            case 'food_list':
+            case 'food_list_breakfast':
+                self.eating_type = 'breakfast'
+                self.stack.removeWidget(self.window5)
+                self.window5.deleteLater()
+                self.window5 = FoodList(self)
+                self.stack.addWidget(self.window5)
                 self.stack.setCurrentWidget(self.window5)
-
+            case 'food_list_lunch':
+                self.eating_type = 'lunch'
+                self.stack.removeWidget(self.window5)
+                self.window5.deleteLater()
+                self.window5 = FoodList(self)
+                self.stack.addWidget(self.window5)
+                self.stack.setCurrentWidget(self.window5)
+            case 'food_list_dinner':
+                self.eating_type = 'dinner'
+                self.stack.removeWidget(self.window5)
+                self.window5.deleteLater()
+                self.window5 = FoodList(self)
+                self.stack.addWidget(self.window5)
+                self.stack.setCurrentWidget(self.window5)
 
 if __name__ == "__main__":
     import sys
