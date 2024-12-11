@@ -7,6 +7,7 @@ from left_menu import LeftMenu
 from reg_auth_form import RegAuthForm
 from reg_form import RegForm
 from user_weight_form import UserWeightForm
+from database_connection import DatabaseConnection
 
 
 class MainWindow(QMainWindow):
@@ -25,6 +26,7 @@ class MainWindow(QMainWindow):
         self.current_user_id = None
         self.eating_type = None
         self.current_date = None
+        self.db = DatabaseConnection()
         foods = self.db.find_all_food()
         self.UIinit()
 
@@ -35,7 +37,7 @@ class MainWindow(QMainWindow):
         self.window1 = RegAuthForm(self)
         self.window2 = RegForm(self)
         self.window3 = AuthForm(self)
-        self.window4 = FoodDiary(self)
+        # self.window4 = FoodDiary(self)
         self.window5 = FoodList(self)
         self.window6 = LeftMenu(self)
         self.window7 = UserWeightForm(self)
@@ -43,7 +45,7 @@ class MainWindow(QMainWindow):
         self.stack.addWidget(self.window1)
         self.stack.addWidget(self.window2)
         self.stack.addWidget(self.window3)
-        self.stack.addWidget(self.window4)
+        # self.stack.addWidget(self.window4)
         self.stack.addWidget(self.window5)
         self.stack.addWidget(self.window6)
         self.stack.addWidget(self.window7)
@@ -64,8 +66,9 @@ class MainWindow(QMainWindow):
             case 'auth_back':
                 self.stack.setCurrentWidget(self.window1)
             case 'food_diary':
-                self.stack.removeWidget(self.window4)
-                self.window4.deleteLater()
+                if self.window4 is not None:
+                    self.stack.removeWidget(self.window4)
+                    self.window4.deleteLater()
                 self.window4 = FoodDiary(self)
                 self.stack.addWidget(self.window4)
                 self.stack.setCurrentWidget(self.window4)

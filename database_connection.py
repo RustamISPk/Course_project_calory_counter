@@ -35,7 +35,8 @@ class DatabaseConnection:
             user_id = self.connection.insert_id()
             now = datetime.now()
             formatted_date = now.strftime("%Y-%m-%d")
-            insert_query = f"INSERT INTO {user_weight_story_table}(user_id, user_weight, weight_date) VALUES(%s, %s, %s);"
+            insert_query = f"INSERT INTO {user_weight_story_table}(user_id, user_weight, weight_date) VALUES(%s, %s, " \
+                           f"%s); "
             cursor.execute(insert_query, (user_id, weight, formatted_date))
 
         self.connection.commit()
@@ -78,15 +79,14 @@ class DatabaseConnection:
             ate_food = cursor.fetchall()
         return ate_food
 
-    def get_product_by_id(self, id):
+    def get_product_by_id(self, product_id, eating_id):
         with self.connection.cursor() as cursor:
             now = datetime.now()
             formatted_date = now.strftime("%Y-%m-%d")
-            insert_query = f"SELECT product_and_recipe_list.product_name, product_and_recipe_list.calory, " \
-                           f"product_and_recipe_list.protein, product_and_recipe_list.fats, " \
-                           f"product_and_recipe_list.carbohydrates, users.password, data.data_1, data.data_2 FROM " \
-                           f"users,data WHERE " \ 
-                           f"users.user_id=data.user_id AND users.email='$user_email' "
+            insert_query = f"SELECT p.product_name, p.calory, p.protein, p.fats, p.carbohydrates,e.eating_date, " \
+                           f"e.product_count, e.eating_type FROM product_and_recipe_list p INNER JOIN eating e ON " \
+                           f"p.product_id = e.product_id WHERE p.product_id = {product_id} AND e.eating_date = " \
+                           f"'{formatted_date}' AND e.eating_id = '{eating_id}'; "
             cursor.execute(insert_query)
             ate_food = cursor.fetchall()
         return ate_food
