@@ -7,6 +7,7 @@ from database_connection import DatabaseConnection
 class FoodDiary(QWidget):
     def __init__(self, mainwindow):
         super().__init__()
+        self.calory_counter_label = None
         self.main_layout = None
         self.main_widget = None
         self.scroll_area = None
@@ -44,6 +45,11 @@ class FoodDiary(QWidget):
         self.add_meal_section('Обед', 'lunch', mainwindow)
         self.add_meal_section('Ужин', 'dinner', mainwindow)
 
+        self.calory_counter_label = QLabel(self)
+        self.calory_counter_label.setGeometry(QtCore.QRect(900, 0, 250, 81))
+        self.calory_counter_label.setText(f'Калории: {self.calory_eated} из {mainwindow.calory_can_eat}'
+                                          f'\nБелки: {self.proein_eated}\nЖиры: {self.fats_eated}\nУглеводы: {self.carbohydrates_eated}')
+
         self.scroll_area.setWidget(self.main_widget)
 
     def add_meal_section(self, meal_name, meal_type, mainwindow):
@@ -70,20 +76,43 @@ class FoodDiary(QWidget):
                     food_name_label = QLabel(food["product_name"])
                     vertical_layout.addWidget(food_name_label)
 
-                    food_calory_label = QLabel(f"Калории: {int(food['calory']) * int(food['product_count'])}")
+                    calory = float(food['calory'])/100 * float(food_ate['product_count'])
+                    calory = round(calory)
+                    food_calory_label = QLabel(f"Калории: {calory}")
+                    self.calory_eated += calory
                     vertical_layout.addWidget(food_calory_label)
 
-                    food_protein_label = QLabel(f"Белки: {food['protein']}")
+                    protein = float(food['protein'])/100 * float(food_ate['product_count'])
+                    protein = round(protein, 1)
+                    food_protein_label = QLabel(f"Белки: {protein}")
+                    self.proein_eated += round(protein, 1)
                     vertical_layout.addWidget(food_protein_label)
 
-                    food_fats_label = QLabel(f"Жиры: {food['fats']}")
+                    fats = float(food['fats'])/100 * float(food_ate['product_count'])
+                    fats = round(fats, 1)
+                    food_fats_label = QLabel(f"Жиры: {fats}")
+                    self.fats_eated += round(fats, 1)
                     vertical_layout.addWidget(food_fats_label)
 
-                    food_carbohydrates_label = QLabel(f"Углеводы: {food['carbohydrates']}")
+                    carbohydrates = float(food['carbohydrates'])/100 * float(food_ate['product_count'])
+                    carbohydrates = round(carbohydrates, 1)
+                    food_carbohydrates_label = QLabel(f"Углеводы: {carbohydrates}")
+                    self.carbohydrates_eated += round(carbohydrates, 1)
                     vertical_layout.addWidget(food_carbohydrates_label)
 
-                    choice_food_button = QPushButton('Удалить')
-                    vertical_layout.addWidget(choice_food_button)
+                    remove_food_button = QPushButton('Удалить')
+                    food_data = {
+                        'calory': calory,
+                        'protein': protein,
+                        'fats': fats,
+                        'carbohydrates': carbohydrates,
+                        'eating_id': food['eat_id']
+                    }
+                    remove_food_button.clicked.connect(
+                        lambda cheked, widget=food_card_widget, food_data=food_data: self.remove_food_from_diary(widget,
+                                                                                                                 food_data,
+                                                                                                                 mainwindow))
+                    vertical_layout.addWidget(remove_food_button)
 
                     meal_layout.addWidget(food_card_widget)
                     trash.append(food)
@@ -104,3 +133,22 @@ class FoodDiary(QWidget):
     def hide_left_menu(self):
         self.left_menu.hide()
         self.menu_button.show()
+
+    def remove_food_from_diary(self, widget, food_data, mainwindow):
+        print(food_data)
+        calory = food_data['calory']
+        protein = food_data['protein']
+        fats = food_data['fats']
+        carbohydrates = food_data['carbohydrates']
+        eating_id = int(food_data['eating_id'])
+        self.calory_eated -= calory
+        self.proein_eated -= protein
+        self.fats_eated -= fats
+        self.carbohydrates_eated -= carbohydrates
+        self.proein_eated = round(self.proein_eated, 1)
+        self.fats_eated = round(self.fats_eated, 1)
+        self.carbohydrates_eated = round(self.carbohydrates_eated, 1)
+        self.db.remove_eating(eating_id)
+        self.calory_counter_label.setText(f'Калории: {self.calory_eated} из {mainwindow.calory_can_eat}'
+                                          f'\nБелки: {self.proein_eated}\nЖиры: {self.fats_eated}\nУглеводы: {self.carbohydrates_eated}')
+        widget.deleteLater()

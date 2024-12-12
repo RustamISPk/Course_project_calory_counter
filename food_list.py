@@ -1,6 +1,6 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QScrollBar, QVBoxLayout, QLabel, QFormLayout, \
+from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QVBoxLayout, QLabel, QFormLayout, \
     QListWidget, QListWidgetItem
 from database_connection import DatabaseConnection
 
@@ -152,5 +152,6 @@ class FoodList(QWidget):
                         eating_type = 'dinner'
                 self.db.write_eating_db(user_id=mainwindow.current_user_id, product_id=product_id,
                                         product_count=count, eating_type=eating_type)
+                mainwindow.forms_switch('food_diary')
         except Exception as e:
             print(e)

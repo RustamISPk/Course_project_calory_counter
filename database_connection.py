@@ -90,3 +90,9 @@ class DatabaseConnection:
             cursor.execute(insert_query)
             ate_food = cursor.fetchall()
         return ate_food
+
+    def remove_eating(self, eating_id):
+        with self.connection.cursor() as cursor:
+            insert_query = f"DELETE FROM eating WHERE eating_id = '{eating_id}'"
+            cursor.execute(insert_query)
+        self.connection.commit()

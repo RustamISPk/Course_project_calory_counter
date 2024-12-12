@@ -28,6 +28,7 @@ class MainWindow(QMainWindow):
         self.current_date = None
         self.db = DatabaseConnection()
         foods = self.db.find_all_food()
+        self.calory_can_eat = 1800
         self.UIinit()
 
     def UIinit(self):
