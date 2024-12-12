@@ -131,3 +131,12 @@ class DatabaseConnection:
             elif user_weight == '' and user_height == '':
                 print('WTF???')
 
+    def save_product_in_database(self, product):
+        with self.connection.cursor() as cursor:
+            insert_query = f"INSERT INTO product_and_recipe_list (product_name, calory, protein, fats, carbohydrates) " \
+                           f"VALUES(%s, %s, %s, %s, %s); "
+            cursor.execute(insert_query, (
+                product['name'], product['calory'], product['protein'], product['fats'], product['carbohydrate']))
+            self.connection.commit()
+            cursor.close()
+

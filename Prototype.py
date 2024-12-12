@@ -9,11 +9,13 @@ from reg_form import RegForm
 from user_weight_form import UserWeightForm
 from database_connection import DatabaseConnection
 from settings import UserSettings
+from add_product_form import AddProductWidget
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.window9 = None
         self.window8 = None
         self.layout = None
         self.stack = None
@@ -45,6 +47,7 @@ class MainWindow(QMainWindow):
         self.window5 = FoodList(self)
         self.window6 = LeftMenu(self)
         self.window7 = UserWeightForm(self)
+        # self.window9 = AddProductWidget(self)
 
         self.stack.addWidget(self.window1)
         self.stack.addWidget(self.window2)
@@ -54,6 +57,7 @@ class MainWindow(QMainWindow):
         self.stack.addWidget(self.window6)
         self.stack.addWidget(self.window7)
         # self.stack.addWidget(self.window8)
+        # self.stack.addWidget(self.window9)
         self.stack.setCurrentWidget(self.window1)
 
         self.setCentralWidget(self.Widget)
@@ -105,6 +109,13 @@ class MainWindow(QMainWindow):
                 self.window8 = UserSettings(self)
                 self.stack.addWidget(self.window8)
                 self.stack.setCurrentWidget(self.window8)
+            case 'add_product':
+                if self.window9 is not None:
+                    self.stack.removeWidget(self.window9)
+                    self.window9.deleteLater()
+                self.window9 = AddProductWidget(self)
+                self.stack.addWidget(self.window9)
+                self.stack.setCurrentWidget(self.window9)
 
 
 if __name__ == "__main__":

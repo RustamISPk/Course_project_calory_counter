@@ -35,7 +35,7 @@ class FoodDiary(QWidget):
         self.menu_button.clicked.connect(self.show_left_menu)
 
         self.scroll_area = QScrollArea(self)
-        self.scroll_area.setGeometry(QtCore.QRect(0, 170, 1331, 700))  # Установите нужную высоту
+        self.scroll_area.setGeometry(QtCore.QRect(0, 170, 1331, 700))
         self.scroll_area.setWidgetResizable(True)
 
         self.main_widget = QWidget()
