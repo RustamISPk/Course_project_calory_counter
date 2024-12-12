@@ -6,7 +6,7 @@ from database_connection import DatabaseConnection
 
 
 class FoodList(QWidget):
-    def __init__(self, mainwindow):
+    def __init__(self, mainwindow, type):
         super().__init__()
         self.db = DatabaseConnection()
         self.list_item = None
@@ -29,6 +29,7 @@ class FoodList(QWidget):
         self.find_products_line_edit = None
         self.find_products_button = None
         self.products_list_back_button = None
+        self.using_type = type
         self.setupUi(mainwindow)
         self.load_food(mainwindow)
 
@@ -135,7 +136,10 @@ class FoodList(QWidget):
         self.food_to_write_name_label.setText(f"{food['product_name']}")
         self.food_to_write_widget.hide()
         self.food_to_write_widget.show()
-        self.food_to_write_button.clicked.connect(lambda: self.write_eating(mainwindow, food))
+        if self.using_type == 'use_for_food_diary':
+            self.food_to_write_button.clicked.connect(lambda: self.write_eating(mainwindow, food))
+        elif self.using_type == 'use_for_add_recipe':
+            self.food_to_write_button.clicked.connect(lambda: self.for_add_recipe(mainwindow, food))
 
     def write_eating(self, mainwindow, food):
         try:
@@ -153,5 +157,18 @@ class FoodList(QWidget):
                 self.db.write_eating_db(user_id=mainwindow.current_user_id, product_id=product_id,
                                         product_count=count, eating_type=eating_type)
                 mainwindow.forms_switch('food_diary')
+        except Exception as e:
+            print(e)
+
+    def for_add_recipe(self, mainwindow, food):
+        try:
+            if self.food_to_write_count_line_edit.text() != '':
+                product_id = food['product_id']
+                count = self.food_to_write_count_line_edit.text()
+                food_list_for_recipe = self.db.get_product_by_id_for_recipe(product_id)
+                food_list_for_recipe[0]['count'] = count
+                mainwindow.food_list_for_recipe.append(food_list_for_recipe[0])
+                # print(mainwindow.food_list_for_recipe)
+                mainwindow.forms_switch('add_recipe')
         except Exception as e:
             print(e)

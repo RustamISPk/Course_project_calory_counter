@@ -10,11 +10,13 @@ from user_weight_form import UserWeightForm
 from database_connection import DatabaseConnection
 from settings import UserSettings
 from add_product_form import AddProductWidget
+from add_recipe_form import AddRecipeWidget
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.window10 = None
         self.window9 = None
         self.window8 = None
         self.layout = None
@@ -34,6 +36,7 @@ class MainWindow(QMainWindow):
         self.db = DatabaseConnection()
         foods = self.db.find_all_food()
         self.calory_can_eat = 1800
+        self.food_list_for_recipe = []
         self.UIinit()
 
     def UIinit(self):
@@ -44,7 +47,7 @@ class MainWindow(QMainWindow):
         self.window2 = RegForm(self)
         self.window3 = AuthForm(self)
         # self.window4 = FoodDiary(self)
-        self.window5 = FoodList(self)
+        self.window5 = FoodList(self, 'use_for_food_diary')
         self.window6 = LeftMenu(self)
         self.window7 = UserWeightForm(self)
         # self.window9 = AddProductWidget(self)
@@ -85,21 +88,27 @@ class MainWindow(QMainWindow):
                 self.eating_type = 'breakfast'
                 self.stack.removeWidget(self.window5)
                 self.window5.deleteLater()
-                self.window5 = FoodList(self)
+                self.window5 = FoodList(self, 'use_for_food_diary')
                 self.stack.addWidget(self.window5)
                 self.stack.setCurrentWidget(self.window5)
             case 'food_list_lunch':
                 self.eating_type = 'lunch'
                 self.stack.removeWidget(self.window5)
                 self.window5.deleteLater()
-                self.window5 = FoodList(self)
+                self.window5 = FoodList(self, 'use_for_food_diary')
                 self.stack.addWidget(self.window5)
                 self.stack.setCurrentWidget(self.window5)
             case 'food_list_dinner':
                 self.eating_type = 'dinner'
                 self.stack.removeWidget(self.window5)
                 self.window5.deleteLater()
-                self.window5 = FoodList(self)
+                self.window5 = FoodList(self, 'use_for_food_diary')
+                self.stack.addWidget(self.window5)
+                self.stack.setCurrentWidget(self.window5)
+            case 'food_list_for_recipe':
+                self.stack.removeWidget(self.window5)
+                self.window5.deleteLater()
+                self.window5 = FoodList(self, 'use_for_add_recipe')
                 self.stack.addWidget(self.window5)
                 self.stack.setCurrentWidget(self.window5)
             case 'user_settings':
@@ -116,6 +125,13 @@ class MainWindow(QMainWindow):
                 self.window9 = AddProductWidget(self)
                 self.stack.addWidget(self.window9)
                 self.stack.setCurrentWidget(self.window9)
+            case 'add_recipe':
+                if self.window10 is not None:
+                    self.stack.removeWidget(self.window10)
+                    self.window10.deleteLater()
+                self.window10 = AddRecipeWidget(self)
+                self.stack.addWidget(self.window10)
+                self.stack.setCurrentWidget(self.window10)
 
 
 if __name__ == "__main__":

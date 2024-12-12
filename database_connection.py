@@ -140,3 +140,10 @@ class DatabaseConnection:
             self.connection.commit()
             cursor.close()
 
+    def get_product_by_id_for_recipe(self, product_id):
+        with self.connection.cursor() as cursor:
+            insert_query = f"SELECT * FROM product_and_recipe_list WHERE product_id = '{product_id}'"
+            cursor.execute(insert_query)
+            using_food = cursor.fetchall()
+        return using_food
+
