@@ -62,8 +62,8 @@ class RegForm(QMainWindow):
         self.person_weight_line_edit.setPlaceholderText('Введите вес')
         self.person_weight_line_edit.setValidator(QDoubleValidator(1.0, 800.0, 2, self))
         self.person_age_line_edit = QDateEdit(self.centralwidget)
-        self.person_age_line_edit.setDate(QDate.currentDate())  # Устанавливаем текущую дату по умолчанию
-        self.person_age_line_edit.setDisplayFormat("dd-MM-yyyy")  # Устанавливаем формат отображения даты
+        self.person_age_line_edit.setDate(QDate.currentDate())
+        self.person_age_line_edit.setDisplayFormat("dd-MM-yyyy")
         self.person_age_line_edit.setCalendarPopup(True)
         self.person_age_line_edit.setGeometry(QtCore.QRect(530, 510, 331, 41))
         self.person_age_line_edit.setObjectName("person_age_line_edit")

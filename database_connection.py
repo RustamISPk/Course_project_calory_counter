@@ -96,3 +96,38 @@ class DatabaseConnection:
             insert_query = f"DELETE FROM eating WHERE eating_id = '{eating_id}'"
             cursor.execute(insert_query)
         self.connection.commit()
+
+    def get_user_birth_date(self, user_id):
+        with self.connection.cursor() as cursor:
+            insert_query = f"SELECT * FROM user_account WHERE user_id = '{user_id}'"
+            cursor.execute(insert_query)
+            ate_food = cursor.fetchall()
+        return ate_food[0]['user_birthdate']
+
+    def change_user_params(self, user_id, user_height, user_weight, user_age, user_gender):
+        with self.connection.cursor() as cursor:
+            if user_weight == '' and user_height != '':
+                insert_query = f"UPDATE user_account SET user_height = '{user_height}', user_birthdate = '{user_age}'," \
+                               f" user_gender = '{user_gender}' WHERE user_id = {user_id}"
+                cursor.execute(insert_query)
+                self.connection.commit()
+            elif user_weight != '' and user_height == '':
+                insert_query = f"INSERT INTO user_weight_story (user_id, user_weight, weight_date) VALUES(%s, %s, %s);"
+                now = datetime.now()
+                formatted_date = now.strftime("%Y-%m-%d")
+                cursor.execute(insert_query, (
+                    user_id, user_weight, formatted_date))
+                self.connection.commit()
+            elif user_weight != '' and user_height != '':
+                insert_query = f"UPDATE user_account SET user_height = '{user_height}', user_birthdate = '{user_age}'," \
+                               f" user_gender = '{user_gender}' WHERE user_id = {user_id}"
+                cursor.execute(insert_query)
+                insert_query = f"INSERT INTO user_weight_story (user_id, user_weight, weight_date) VALUES(%s, %s, %s);"
+                now = datetime.now()
+                formatted_date = now.strftime("%Y-%m-%d")
+                cursor.execute(insert_query, (
+                    user_id, user_weight, formatted_date))
+                self.connection.commit()
+            elif user_weight == '' and user_height == '':
+                print('WTF???')
+

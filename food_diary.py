@@ -16,6 +16,7 @@ class FoodDiary(QWidget):
         self.calory_eated = 0
         self.proein_eated = 0
         self.fats_eated = 0
+        self.mainwindow = mainwindow
         self.carbohydrates_eated = 0
         self.db = DatabaseConnection()
         self.setupUi(mainwindow)
@@ -152,3 +153,6 @@ class FoodDiary(QWidget):
         self.calory_counter_label.setText(f'Калории: {self.calory_eated} из {mainwindow.calory_can_eat}'
                                           f'\nБелки: {self.proein_eated}\nЖиры: {self.fats_eated}\nУглеводы: {self.carbohydrates_eated}')
         widget.deleteLater()
+
+    def switch_form(self, case):
+        self.mainwindow.forms_switch(case)

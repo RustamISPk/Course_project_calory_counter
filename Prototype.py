@@ -8,14 +8,17 @@ from reg_auth_form import RegAuthForm
 from reg_form import RegForm
 from user_weight_form import UserWeightForm
 from database_connection import DatabaseConnection
+from settings import UserSettings
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.window8 = None
         self.layout = None
         self.stack = None
         self.Widget = None
+        self.window8 = None
         self.window7 = None
         self.window5 = None
         self.window6 = None
@@ -50,6 +53,7 @@ class MainWindow(QMainWindow):
         self.stack.addWidget(self.window5)
         self.stack.addWidget(self.window6)
         self.stack.addWidget(self.window7)
+        # self.stack.addWidget(self.window8)
         self.stack.setCurrentWidget(self.window1)
 
         self.setCentralWidget(self.Widget)
@@ -94,6 +98,14 @@ class MainWindow(QMainWindow):
                 self.window5 = FoodList(self)
                 self.stack.addWidget(self.window5)
                 self.stack.setCurrentWidget(self.window5)
+            case 'user_settings':
+                if self.window8 is not None:
+                    self.stack.removeWidget(self.window8)
+                    self.window8.deleteLater()
+                self.window8 = UserSettings(self)
+                self.stack.addWidget(self.window8)
+                self.stack.setCurrentWidget(self.window8)
+
 
 if __name__ == "__main__":
     import sys
