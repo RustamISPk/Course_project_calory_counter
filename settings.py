@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-from datetime import datetime
-from time import strptime
-
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QDate
+from PyQt5 import QtCore
 from PyQt5.QtGui import QIntValidator, QDoubleValidator
 from PyQt5.QtWidgets import QWidget, QPushButton, QVBoxLayout, QLineEdit, QComboBox, QDateEdit
 
@@ -32,8 +27,7 @@ class UserSettings(QWidget):
     def initUI(self, mainwindow):
         try:
             self.birth_date = self.db.get_user_birth_date(mainwindow.current_user_id)
-            self.birth_date = datetime.strptime(self.birth_date, '%d-%m-%Y')
-            self.setGeometry(100, 100, 1380, 867)
+            self.setGeometry(100, 100, 1800, 900)
             self.setWindowTitle('Настройки пользователя')
 
             self.menu_button = QPushButton('Меню', self)
@@ -41,7 +35,7 @@ class UserSettings(QWidget):
             self.menu_button.clicked.connect(lambda: self.show_left_menu())
 
             self.verticalLayoutWidget = QWidget(self)
-            self.verticalLayoutWidget.setGeometry(550, 270, 231, 191)
+            self.verticalLayoutWidget.setGeometry(700, 200, 400, 400)
             self.left_menu = LeftMenu(self)
             self.left_menu.hide()
 
@@ -62,7 +56,7 @@ class UserSettings(QWidget):
 
             self.user_age_line_edit = QDateEdit(self.verticalLayoutWidget)
             self.user_age_line_edit.setDate(self.birth_date)
-            self.user_age_line_edit.setDisplayFormat("dd-MM-yyyy")
+            self.user_age_line_edit.setDisplayFormat("yyyy-MM-dd")
             self.user_age_line_edit.setCalendarPopup(True)
             self.user_age_line_edit.setGeometry(QtCore.QRect(530, 510, 331, 41))
             self.user_age_line_edit.setObjectName("user_age_line_edit")

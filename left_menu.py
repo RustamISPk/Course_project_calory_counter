@@ -24,6 +24,7 @@ class LeftMenu(QWidget):
         self.verticalLayout.addWidget(self.food_diary_button)
 
         self.my_weight_button = QPushButton("Мой вес", self)
+        self.my_weight_button.clicked.connect(lambda: parent.switch_form('user_weight'))
         self.verticalLayout.addWidget(self.my_weight_button)
 
         self.add_product_button = QPushButton("Добавить продукт", self)

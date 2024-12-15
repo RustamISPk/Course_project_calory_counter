@@ -8,7 +8,8 @@ create table if not exists product_and_recipe_list(
     calory int not null,
     protein float not null,
     fats float not null,
-    carbohydrates float not null
+    carbohydrates float not null,
+    food_type varchar(20) not null
 );
 
 create table if not exists user_account(
@@ -18,7 +19,7 @@ create table if not exists user_account(
     user_login varchar(45) not null,
     user_password varchar (45) not null,
     user_height int not null,
-    user_birthdate varchar(45) not null,
+    user_birthdate date not null,
     user_gender varchar(20) not null
 );
 
@@ -26,7 +27,7 @@ create table if not exists user_weight_story(
 	user_wieght_story_id int not null primary key auto_increment,
     user_id int not null,
     user_weight float not null,
-    weight_date varchar(20) not null,
+    weight_date date not null,
 	foreign key (user_id) 
     references courseproject.user_account(user_id) 
     on delete cascade
@@ -35,7 +36,7 @@ create table if not exists user_weight_story(
 create table if not exists eating(
 	eating_id int not null primary key auto_increment,
     user_id int not null,
-    eating_date varchar(20) not null,
+    eating_date date not null,
     product_id int not null,
     product_count int not null,
     eating_type varchar(20),

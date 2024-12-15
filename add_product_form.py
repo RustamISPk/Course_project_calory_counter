@@ -23,7 +23,7 @@ class AddProductWidget(QWidget):
         self.setupUi(mainwindow)
 
     def setupUi(self, mainwindow):
-        self.setGeometry(100, 100, 1380, 867)
+        self.setGeometry(100, 100, 1820, 980)
 
         self.left_menu = LeftMenu(self)
         self.left_menu.hide()
@@ -35,7 +35,7 @@ class AddProductWidget(QWidget):
         self.menu_button.clicked.connect(lambda: self.show_left_menu())
 
         self.verticalLayoutWidget = QWidget(self)
-        self.verticalLayoutWidget.setGeometry(550, 270, 231, 191)
+        self.verticalLayoutWidget.setGeometry(700, 200, 400, 400)
 
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -85,7 +85,8 @@ class AddProductWidget(QWidget):
                 'calory': '',
                 'protein': '',
                 'fats': '',
-                'carbohydrate': ''
+                'carbohydrate': '',
+                'type': 'product'
             }
             elements = [self.add_food_name_line_edit, self.add_food_calory_line_edit, self.add_food_protein_line_edit,
                         self.add_food_fats_line_edit, self.add_food_carbohydrates_line_edit]

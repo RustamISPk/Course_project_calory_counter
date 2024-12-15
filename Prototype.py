@@ -33,9 +33,10 @@ class MainWindow(QMainWindow):
         self.current_user_id = None
         self.eating_type = None
         self.current_date = None
+        self.IMT = 0.0
         self.db = DatabaseConnection()
         foods = self.db.find_all_food()
-        self.calory_can_eat = 1800
+        self.calory_can_eat = 0
         self.food_list_for_recipe = []
         self.UIinit()
 
@@ -46,21 +47,16 @@ class MainWindow(QMainWindow):
         self.window1 = RegAuthForm(self)
         self.window2 = RegForm(self)
         self.window3 = AuthForm(self)
-        # self.window4 = FoodDiary(self)
         self.window5 = FoodList(self, 'use_for_food_diary')
         self.window6 = LeftMenu(self)
         self.window7 = UserWeightForm(self)
-        # self.window9 = AddProductWidget(self)
 
         self.stack.addWidget(self.window1)
         self.stack.addWidget(self.window2)
         self.stack.addWidget(self.window3)
-        # self.stack.addWidget(self.window4)
         self.stack.addWidget(self.window5)
         self.stack.addWidget(self.window6)
         self.stack.addWidget(self.window7)
-        # self.stack.addWidget(self.window8)
-        # self.stack.addWidget(self.window9)
         self.stack.setCurrentWidget(self.window1)
 
         self.setCentralWidget(self.Widget)
@@ -132,6 +128,13 @@ class MainWindow(QMainWindow):
                 self.window10 = AddRecipeWidget(self)
                 self.stack.addWidget(self.window10)
                 self.stack.setCurrentWidget(self.window10)
+            case 'user_weight':
+                if self.window7 is not None:
+                    self.stack.removeWidget(self.window10)
+                    self.window7.deleteLater()
+                self.window7 = UserWeightForm(self)
+                self.stack.addWidget(self.window7)
+                self.stack.setCurrentWidget(self.window7)
 
 
 if __name__ == "__main__":

@@ -31,7 +31,8 @@ class FoodList(QWidget):
         self.products_list_back_button = None
         self.using_type = type
         self.setupUi(mainwindow)
-        self.load_food(mainwindow)
+        foods = self.db.find_all_food()
+        self.load_food(mainwindow, foods)
 
     def setupUi(self, mainwindow):
         self.setObjectName("FoodListWidget")
@@ -47,6 +48,7 @@ class FoodList(QWidget):
         self.find_products_button.setGeometry(QtCore.QRect(1170, 10, 181, 41))
         self.find_products_button.setObjectName("find_products_button")
         self.find_products_button.setText('Найти')
+        self.find_products_button.clicked.connect(lambda: self.find_product_by_name(mainwindow))
 
         self.find_products_line_edit = QLineEdit(self)
         self.find_products_line_edit.setGeometry(QtCore.QRect(180, 10, 991, 41))
@@ -61,11 +63,13 @@ class FoodList(QWidget):
         self.products_button.setGeometry(QtCore.QRect(0, 0, 671, 101))
         self.products_button.setObjectName("products_button")
         self.products_button.setText('Продукты')
+        self.products_button.clicked.connect(lambda: self.find_products(mainwindow))
 
         self.recipes_button = QPushButton(self.change_food_mode_widget)
         self.recipes_button.setGeometry(QtCore.QRect(680, 0, 671, 101))
         self.recipes_button.setObjectName("recipes_button")
         self.recipes_button.setText('Рецепты')
+        self.recipes_button.clicked.connect(lambda: self.find_recipes(mainwindow))
 
         self.food_list_widget = QListWidget(self)
         self.food_list_widget.setGeometry(QtCore.QRect(170, 150, 1011, 691))
@@ -99,8 +103,10 @@ class FoodList(QWidget):
 
         self.food_to_write_widget.hide()
 
-    def load_food(self, mainwindow):
-        foods = self.db.find_all_food()
+    def load_food(self, mainwindow, foods):
+        # foods = self.db.find_all_food()
+        if self.food_list_widget is not None and self.list_item is not None:
+            self.food_list_widget.clear()
         for food in foods:
             food_card_widget = QWidget()
             food_card_widget.setGeometry(QtCore.QRect(0, 0, 1011, 111))
@@ -168,7 +174,35 @@ class FoodList(QWidget):
                 food_list_for_recipe = self.db.get_product_by_id_for_recipe(product_id)
                 food_list_for_recipe[0]['count'] = count
                 mainwindow.food_list_for_recipe.append(food_list_for_recipe[0])
-                # print(mainwindow.food_list_for_recipe)
                 mainwindow.forms_switch('add_recipe')
+        except Exception as e:
+            print(e)
+
+    def find_product_by_name(self, mainwindow):
+        try:
+            name = self.find_products_line_edit.text()
+            need_food = []
+            food_list = self.db.find_all_food()
+            if name != '':
+                for food in food_list:
+                    if name.lower() in food['product_name'].lower():
+                        need_food.append(food)
+                self.load_food(mainwindow, need_food)
+            elif name == '':
+                self.load_food(mainwindow, food_list)
+        except Exception as e:
+            print(e)
+
+    def find_products(self, mainwindow):
+        try:
+            food_list = self.db.find_products()
+            self.load_food(mainwindow, food_list)
+        except Exception as e:
+            print(e)
+
+    def find_recipes(self, mainwindow):
+        try:
+            food_list = self.db.find_recipes()
+            self.load_food(mainwindow, food_list)
         except Exception as e:
             print(e)

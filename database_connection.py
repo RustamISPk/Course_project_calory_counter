@@ -133,10 +133,10 @@ class DatabaseConnection:
 
     def save_product_in_database(self, product):
         with self.connection.cursor() as cursor:
-            insert_query = f"INSERT INTO product_and_recipe_list (product_name, calory, protein, fats, carbohydrates) " \
-                           f"VALUES(%s, %s, %s, %s, %s); "
+            insert_query = f"INSERT INTO product_and_recipe_list (product_name, calory, protein, fats, carbohydrates, food_type) " \
+                           f"VALUES(%s, %s, %s, %s, %s, %s); "
             cursor.execute(insert_query, (
-                product['name'], product['calory'], product['protein'], product['fats'], product['carbohydrate']))
+                product['name'], product['calory'], product['protein'], product['fats'], product['carbohydrate'], product['type']))
             self.connection.commit()
             cursor.close()
 
@@ -146,4 +146,59 @@ class DatabaseConnection:
             cursor.execute(insert_query)
             using_food = cursor.fetchall()
         return using_food
+
+    def write_user_new_weight(self, user_id, weight):
+        with self.connection.cursor() as cursor:
+            now = datetime.now()
+            formatted_date = now.strftime("%Y-%m-%d")
+            insert_query = f"INSERT INTO user_weight_story (user_id, user_weight, weight_date) VALUES(%s, %s, " \
+                           f"%s); "
+            cursor.execute(insert_query, (user_id, weight, formatted_date))
+        self.connection.commit()
+
+    def load_graphic_data(self, user_id):
+        with self.connection.cursor() as cursor:
+            insert_query = f"SELECT * FROM user_weight_story WHERE user_id = '{user_id}'"
+            cursor.execute(insert_query)
+            using_food = cursor.fetchall()
+        return using_food
+
+    def get_user_by_id(self, user_id):
+        with self.connection.cursor() as cursor:
+            insert_query = f"SELECT * FROM user_account WHERE user_id = '{user_id}'"
+            cursor.execute(insert_query)
+            user_data = cursor.fetchall()
+        return user_data
+
+    def get_user_weight(self, user_id):
+        with self.connection.cursor() as cursor:
+            insert_query = f"SELECT * FROM user_weight_story WHERE user_id = '{user_id}'"
+            cursor.execute(insert_query)
+            user_data = cursor.fetchall()
+        return user_data[len(user_data) - 1]['user_weight']
+
+    def check_user_in_db(self, login):
+        with self.connection.cursor() as cursor:
+            insert_query = f"SELECT * FROM user_account WHERE user_login = '{login}'"
+            cursor.execute(insert_query)
+            user = cursor.fetchall()
+        if len(user) > 0:
+            user_id = user[0]['user_id']
+            return True, int(user_id)
+        else:
+            return False, None
+
+    def find_products(self):
+        with self.connection.cursor() as cursor:
+            insert_query = f"SELECT * FROM product_and_recipe_list WHERE food_type = 'product'"
+            cursor.execute(insert_query)
+            food = cursor.fetchall()
+            return food
+
+    def find_recipes(self):
+        with self.connection.cursor() as cursor:
+            insert_query = f"SELECT * FROM product_and_recipe_list WHERE food_type = 'recipe'"
+            cursor.execute(insert_query)
+            food = cursor.fetchall()
+            return food
 

@@ -1,8 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QWidget
 
 
-class RegAuthForm(QMainWindow):
+class RegAuthForm(QWidget):
     def __init__(self, mainwindow):
         super().__init__()
         self.centralwidget = None
@@ -12,24 +12,19 @@ class RegAuthForm(QMainWindow):
         self.setupUi(mainwindow)
 
     def setupUi(self, mainwindow):
-        # mainwindow.setObjectName("MainWindow")
-        # mainwindow.resize(1379, 867)
-        self.centralwidget = QtWidgets.QWidget(mainwindow)
+        self.centralwidget = QWidget(self)
+        self.centralwidget.setGeometry(QtCore.QRect(0, 0, 1920, 1080))
         self.centralwidget.setObjectName("centralwidget")
         self.login_button = QtWidgets.QPushButton(self.centralwidget)
-        self.login_button.setGeometry(QtCore.QRect(610, 290, 171, 81))
+        self.login_button.setGeometry(QtCore.QRect(860, 340, 200, 100))
         self.login_button.setObjectName("login_button")
         self.login_button.setText('Войти')
         self.login_button.clicked.connect(lambda: mainwindow.forms_switch('auth'))
         self.registration_button = QtWidgets.QPushButton(self.centralwidget)
-        self.registration_button.setGeometry(QtCore.QRect(610, 390, 171, 81))
+        self.registration_button.setGeometry(QtCore.QRect(860, 460, 200, 100))
         self.registration_button.setObjectName("registration_button")
         self.registration_button.setText('Регистрация')
         self.registration_button.clicked.connect(lambda: mainwindow.forms_switch('reg'))
-        mainwindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(mainwindow)
-        self.statusbar.setObjectName("statusbar")
-        mainwindow.setStatusBar(self.statusbar)
-        self.setCentralWidget(self.centralwidget)
+
 
 

@@ -26,7 +26,7 @@ class AddRecipeWidget(QWidget):
     def setupUi(self, mainwindow):
         try:
             self.setObjectName("AddRecipeWidget")
-            self.resize(1379, 867)
+            self.resize(1920, 1080)
 
             self.menu_button = QPushButton(self)
             self.menu_button.setGeometry(QtCore.QRect(0, 0, 141, 61))
@@ -38,7 +38,7 @@ class AddRecipeWidget(QWidget):
             self.left_menu.hide()
 
             self.scroll_area = QScrollArea(self)
-            self.scroll_area.setGeometry(QtCore.QRect(0, 170, 1331, 700))
+            self.scroll_area.setGeometry(QtCore.QRect(0, 170, 1800, 700))
             self.scroll_area.setWidgetResizable(True)
 
             self.products_widget = QWidget(self)
@@ -60,19 +60,19 @@ class AddRecipeWidget(QWidget):
             self.add_product_button.clicked.connect(lambda: self.switch_form('food_list_for_recipe'))
             self.products_layout.addWidget(self.add_product_button)
 
-            self.add_recipe_product_label = QLineEdit(self)
-            self.add_recipe_product_label.setGeometry(QtCore.QRect(80, 110, 200, 31))
-            self.add_recipe_product_label.setObjectName("add_recipe_product_label")
-            self.add_recipe_product_label.setText("Продукты для рецепта:")
-            self.add_recipe_product_label.setReadOnly(True)  # Запрещаем изменение текста
-            self.products_layout.addWidget(self.add_recipe_product_label)
-
             self.add_recipe_save_button = QPushButton(self)
             self.add_recipe_save_button.setGeometry(QtCore.QRect(70, 150, 200, 41))
             self.add_recipe_save_button.setObjectName("add_recipe_save_button")
             self.add_recipe_save_button.setText("Сохранить рецепт")
             self.add_recipe_save_button.clicked.connect(lambda: self.save_recipe(mainwindow))
             self.products_layout.addWidget(self.add_recipe_save_button)
+
+            self.add_recipe_product_label = QLineEdit(self)
+            self.add_recipe_product_label.setGeometry(QtCore.QRect(80, 110, 200, 31))
+            self.add_recipe_product_label.setObjectName("add_recipe_product_label")
+            self.add_recipe_product_label.setText("Продукты для рецепта:")
+            self.add_recipe_product_label.setReadOnly(True)  # Запрещаем изменение текста
+            self.products_layout.addWidget(self.add_recipe_product_label)
 
         except Exception as e:
             print(e)
@@ -150,7 +150,8 @@ class AddRecipeWidget(QWidget):
                 'calory': 0,
                 'protein': 0,
                 'fats': 0,
-                'carbohydrate': 0
+                'carbohydrate': 0,
+                'type': 'recipe'
             }
             for food in mainwindow.food_list_for_recipe:
                 product['name'] = self.add_recipe_line_edit.text()

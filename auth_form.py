@@ -1,5 +1,5 @@
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QWidget, QLineEdit, QPushButton, QStatusBar
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QWidget, QLineEdit, QPushButton
 from database_connection import DatabaseConnection
 
 
@@ -11,11 +11,11 @@ class AuthForm(QWidget):
         self.password_line_edit = None
         self.login_line_edit = None
         self.auth_back_button = None
+        self.db = DatabaseConnection()
         self.setupUi(mainwindow)
 
     def setupUi(self, mainwindow):
         self.setObjectName("AuthFormWidget")
-        self.resize(1380, 867)
 
         self.auth_back_button = QPushButton(self)
         self.auth_back_button.setGeometry(QtCore.QRect(0, 0, 131, 51))
@@ -25,19 +25,19 @@ class AuthForm(QWidget):
 
         self.login_line_edit = QLineEdit(self)
         self.login_line_edit.setMaxLength(45)
-        self.login_line_edit.setGeometry(QtCore.QRect(530, 320, 311, 41))
+        self.login_line_edit.setGeometry(QtCore.QRect(760, 320, 400, 50))
         self.login_line_edit.setObjectName("login_line_edit")
         self.login_line_edit.setPlaceholderText('Введите логин')
 
         self.password_line_edit = QLineEdit(self)
         self.password_line_edit.setMaxLength(45)
-        self.password_line_edit.setGeometry(QtCore.QRect(530, 370, 311, 41))
+        self.password_line_edit.setGeometry(QtCore.QRect(760, 380, 400, 50))
         self.password_line_edit.setObjectName("password_line_edit")
         self.password_line_edit.setPlaceholderText('Введите пароль')
         self.password_line_edit.setEchoMode(QLineEdit.Password)
 
         self.auth_confirm_button = QPushButton(self)
-        self.auth_confirm_button.setGeometry(QtCore.QRect(610, 450, 151, 81))
+        self.auth_confirm_button.setGeometry(QtCore.QRect(760, 440, 400, 100))
         self.auth_confirm_button.setObjectName("auth_confirm_button")
         self.auth_confirm_button.setText('Войти')
         self.auth_confirm_button.clicked.connect(lambda: self.auth_user(mainwindow))

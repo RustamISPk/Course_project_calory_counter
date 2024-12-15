@@ -1,4 +1,7 @@
+from datetime import datetime
+
 from PyQt5 import QtCore
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QVBoxLayout, QScrollArea
 from left_menu import LeftMenu
 from database_connection import DatabaseConnection
@@ -19,6 +22,7 @@ class FoodDiary(QWidget):
         self.mainwindow = mainwindow
         self.carbohydrates_eated = 0
         self.db = DatabaseConnection()
+        self.count_calory(mainwindow)
         self.setupUi(mainwindow)
 
     def setupUi(self, mainwindow):
@@ -35,7 +39,7 @@ class FoodDiary(QWidget):
         self.menu_button.clicked.connect(self.show_left_menu)
 
         self.scroll_area = QScrollArea(self)
-        self.scroll_area.setGeometry(QtCore.QRect(0, 170, 1331, 700))
+        self.scroll_area.setGeometry(QtCore.QRect(0, 170, 1850, 600))
         self.scroll_area.setWidgetResizable(True)
 
         self.main_widget = QWidget()
@@ -47,14 +51,18 @@ class FoodDiary(QWidget):
         self.add_meal_section('Ужин', 'dinner', mainwindow)
 
         self.calory_counter_label = QLabel(self)
-        self.calory_counter_label.setGeometry(QtCore.QRect(900, 0, 250, 81))
+        self.calory_counter_label.setGeometry(QtCore.QRect(1450, 0, 400, 81))
         self.calory_counter_label.setText(f'Калории: {self.calory_eated} из {mainwindow.calory_can_eat}'
                                           f'\nБелки: {self.proein_eated}\nЖиры: {self.fats_eated}\nУглеводы: {self.carbohydrates_eated}')
+        self.calory_counter_label.setStyleSheet("font: 15pt Times New Roman")
+
 
         self.scroll_area.setWidget(self.main_widget)
 
     def add_meal_section(self, meal_name, meal_type, mainwindow):
         meal_label = QLabel(meal_name, self)
+        meal_label.setStyleSheet("font: 20pt Times New Roman")
+        meal_label.setAlignment(Qt.AlignCenter)
         self.main_layout.addWidget(meal_label)
 
         meal_layout = QVBoxLayout()
@@ -156,3 +164,15 @@ class FoodDiary(QWidget):
 
     def switch_form(self, case):
         self.mainwindow.forms_switch(case)
+
+    def count_calory(self, mainwindow):
+        user_id = mainwindow.current_user_id
+        data = self.db.get_user_by_id(user_id)
+        weight_data = self.db.get_user_weight(user_id)
+        user_birthdate = data[0]['user_birthdate']
+        now = datetime.now()
+        user_age = now.year - user_birthdate.year - ((now.month, now.day) < (user_birthdate.month, user_birthdate.day))
+        if data[0]['user_gender'] == 'Мужской':
+            mainwindow.calory_can_eat = round(66.5 + (13.75 * weight_data) + (5.003 * data[0]['user_height']) - (6.775 * user_age))
+        else:
+            mainwindow.calory_can_eat = round(655.1 + (9.563 * weight_data) + (1.85 * data[0]['user_height']) - (4.676 * user_age))

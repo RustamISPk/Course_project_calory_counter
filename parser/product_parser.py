@@ -22,7 +22,7 @@ class ProductParser:
             self.products_links_arr = product_file.readlines()
             product_file.close()
         self.products_links_arr = [product_link.rstrip() for product_link in self.products_links_arr]
-        print(self.products_links_arr)
+        # print(self.products_links_arr)
 
     def get_html_body(self, link):
         try:
@@ -39,7 +39,8 @@ class ProductParser:
             'calory': '',
             'protein': '',
             'fats': '',
-            'carbohydrate': ''
+            'carbohydrate': '',
+            'type': 'product'
         }
         html_parser = BeautifulSoup(html, "html.parser")
         name_block = html_parser.find('h1', {'id': 'page-title'}).text
@@ -96,10 +97,10 @@ class ProductParser:
 
     def save_product_in_database(self, product):
         with self.connection.cursor() as cursor:
-            insert_query = f"INSERT INTO {product_table}(product_name, calory, protein, fats, carbohydrates) VALUES(" \
-                           f"%s, %s, %s, %s, %s); "
+            insert_query = f"INSERT INTO {product_table}(product_name, calory, protein, fats, carbohydrates, food_type) VALUES(" \
+                           f"%s, %s, %s, %s, %s, %s); "
             cursor.execute(insert_query, (
-                product['name'], product['calory'], product['protein'], product['fats'], product['carbohydrate']))
+                product['name'], product['calory'], product['protein'], product['fats'], product['carbohydrate'], product['type']))
             self.connection.commit()
             cursor.close()
 
