@@ -36,47 +36,50 @@ class FoodList(QWidget):
 
     def setupUi(self, mainwindow):
         self.setObjectName("FoodListWidget")
-        self.resize(1378, 867)
+        self.resize(1920, 1080)
 
         self.products_list_back_button = QPushButton(self)
         self.products_list_back_button.setGeometry(QtCore.QRect(0, 10, 181, 41))
         self.products_list_back_button.setObjectName("products_list_back_button")
-        self.products_list_back_button.clicked.connect(lambda: mainwindow.forms_switch('food_diary'))
+        if self.using_type == 'use_for_food_diary':
+            self.products_list_back_button.clicked.connect(lambda: mainwindow.forms_switch('food_diary'))
+        else:
+            self.products_list_back_button.clicked.connect(lambda: mainwindow.forms_switch('add_recipe'))
         self.products_list_back_button.setText('Назад')
 
         self.find_products_button = QPushButton(self)
-        self.find_products_button.setGeometry(QtCore.QRect(1170, 10, 181, 41))
+        self.find_products_button.setGeometry(QtCore.QRect(1718, 10, 181, 41))
         self.find_products_button.setObjectName("find_products_button")
         self.find_products_button.setText('Найти')
         self.find_products_button.clicked.connect(lambda: self.find_product_by_name(mainwindow))
 
         self.find_products_line_edit = QLineEdit(self)
-        self.find_products_line_edit.setGeometry(QtCore.QRect(180, 10, 991, 41))
+        self.find_products_line_edit.setGeometry(QtCore.QRect(180, 10, 1538, 41))
         self.find_products_line_edit.setObjectName("find_products_line_edit")
         self.find_products_line_edit.setPlaceholderText('Введите продукт')
 
         self.change_food_mode_widget = QWidget(self)
-        self.change_food_mode_widget.setGeometry(QtCore.QRect(0, 50, 1351, 101))
+        self.change_food_mode_widget.setGeometry(QtCore.QRect(0, 50, 1920, 101))
         self.change_food_mode_widget.setObjectName("change_food_mode_widget")
 
         self.products_button = QPushButton(self.change_food_mode_widget)
-        self.products_button.setGeometry(QtCore.QRect(0, 0, 671, 101))
+        self.products_button.setGeometry(QtCore.QRect(0, 0, 945, 101))
         self.products_button.setObjectName("products_button")
         self.products_button.setText('Продукты')
         self.products_button.clicked.connect(lambda: self.find_products(mainwindow))
 
         self.recipes_button = QPushButton(self.change_food_mode_widget)
-        self.recipes_button.setGeometry(QtCore.QRect(680, 0, 671, 101))
+        self.recipes_button.setGeometry(QtCore.QRect(950, 0, 948, 101))
         self.recipes_button.setObjectName("recipes_button")
         self.recipes_button.setText('Рецепты')
         self.recipes_button.clicked.connect(lambda: self.find_recipes(mainwindow))
 
         self.food_list_widget = QListWidget(self)
-        self.food_list_widget.setGeometry(QtCore.QRect(170, 150, 1011, 691))
+        self.food_list_widget.setGeometry(QtCore.QRect(170, 150, 1600, 691))
         self.food_list_widget.setObjectName("food_list_widget")
 
         self.food_to_write_widget = QWidget(self.food_list_widget)
-        self.food_to_write_widget.setGeometry(QtCore.QRect(280, 250, 441, 110))
+        self.food_to_write_widget.setGeometry(QtCore.QRect(565, 250, 450, 110))
         self.food_to_write_widget.setObjectName("food_to_write_widget")
         self.formLayoutWidget = QWidget(self.food_to_write_widget)
         self.formLayoutWidget.setGeometry(QtCore.QRect(10, 10, 400, 500))
@@ -146,6 +149,7 @@ class FoodList(QWidget):
             self.food_to_write_button.clicked.connect(lambda: self.write_eating(mainwindow, food))
         elif self.using_type == 'use_for_add_recipe':
             self.food_to_write_button.clicked.connect(lambda: self.for_add_recipe(mainwindow, food))
+            self.products_list_back_button.clicked.connect(lambda: mainwindow.forms_switch('add_product'))
 
     def write_eating(self, mainwindow, food):
         try:

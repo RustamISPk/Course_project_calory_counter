@@ -106,27 +106,43 @@ class DatabaseConnection:
 
     def change_user_params(self, user_id, user_height, user_weight, user_age, user_gender):
         with self.connection.cursor() as cursor:
+            now = datetime.now()
+            formatted_date = now.strftime("%Y-%m-%d")
             if user_weight == '' and user_height != '':
                 insert_query = f"UPDATE user_account SET user_height = '{user_height}', user_birthdate = '{user_age}'," \
                                f" user_gender = '{user_gender}' WHERE user_id = {user_id}"
                 cursor.execute(insert_query)
                 self.connection.commit()
             elif user_weight != '' and user_height == '':
-                insert_query = f"INSERT INTO user_weight_story (user_id, user_weight, weight_date) VALUES(%s, %s, %s);"
-                now = datetime.now()
-                formatted_date = now.strftime("%Y-%m-%d")
-                cursor.execute(insert_query, (
-                    user_id, user_weight, formatted_date))
+                select_query = f"SELECT * FROM user_weight_story WHERE user_id = '{user_id}'" \
+                               f" AND weight_date = '{formatted_date}'"
+                cursor.execute(select_query)
+                data = cursor.fetchall()
+                if len(data) == 0:
+                    insert_query = f"INSERT INTO user_weight_story (user_id, user_weight, weight_date) VALUES(%s, %s, " \
+                                   f"%s); "
+                    cursor.execute(insert_query, (user_id, user_weight, formatted_date))
+                else:
+                    update_query = f"UPDATE user_weight_story SET user_weight = '{user_weight}' WHERE user_id = {user_id} " \
+                                   f"AND weight_date = '{formatted_date}'"
+                    cursor.execute(update_query)
                 self.connection.commit()
             elif user_weight != '' and user_height != '':
                 insert_query = f"UPDATE user_account SET user_height = '{user_height}', user_birthdate = '{user_age}'," \
                                f" user_gender = '{user_gender}' WHERE user_id = {user_id}"
                 cursor.execute(insert_query)
-                insert_query = f"INSERT INTO user_weight_story (user_id, user_weight, weight_date) VALUES(%s, %s, %s);"
-                now = datetime.now()
-                formatted_date = now.strftime("%Y-%m-%d")
-                cursor.execute(insert_query, (
-                    user_id, user_weight, formatted_date))
+                select_query = f"SELECT * FROM user_weight_story WHERE user_id = '{user_id}'" \
+                               f" AND weight_date = '{formatted_date}'"
+                cursor.execute(select_query)
+                data = cursor.fetchall()
+                if len(data) == 0:
+                    insert_query = f"INSERT INTO user_weight_story (user_id, user_weight, weight_date) VALUES(%s, %s, " \
+                                   f"%s); "
+                    cursor.execute(insert_query, (user_id, user_weight, formatted_date))
+                else:
+                    update_query = f"UPDATE user_weight_story SET user_weight = '{user_weight}' WHERE user_id = {user_id} " \
+                                   f"AND weight_date = '{formatted_date}'"
+                    cursor.execute(update_query)
                 self.connection.commit()
             elif user_weight == '' and user_height == '':
                 print('WTF???')
@@ -151,9 +167,18 @@ class DatabaseConnection:
         with self.connection.cursor() as cursor:
             now = datetime.now()
             formatted_date = now.strftime("%Y-%m-%d")
-            insert_query = f"INSERT INTO user_weight_story (user_id, user_weight, weight_date) VALUES(%s, %s, " \
-                           f"%s); "
-            cursor.execute(insert_query, (user_id, weight, formatted_date))
+            select_query = f"SELECT * FROM user_weight_story WHERE user_id = '{user_id}'" \
+                           f" AND weight_date = '{formatted_date}'"
+            cursor.execute(select_query)
+            data = cursor.fetchall()
+            if len(data) == 0:
+                insert_query = f"INSERT INTO user_weight_story (user_id, user_weight, weight_date) VALUES(%s, %s, " \
+                               f"%s); "
+                cursor.execute(insert_query, (user_id, weight, formatted_date))
+            else:
+                update_query = f"UPDATE user_weight_story SET user_weight = '{weight}' WHERE user_id = {user_id} " \
+                               f"AND weight_date = '{formatted_date}'"
+                cursor.execute(update_query)
         self.connection.commit()
 
     def load_graphic_data(self, user_id):
