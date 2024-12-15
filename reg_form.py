@@ -1,8 +1,9 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QMainWindow, QLineEdit, QWidget, QPushButton, QComboBox, QStatusBar, QDateEdit
+from PyQt5.QtWidgets import QLineEdit, QWidget, QPushButton, QComboBox, QStatusBar, QDateEdit
 from database_connection import DatabaseConnection
 from PyQt5.QtGui import QIntValidator, QDoubleValidator
+import hashlib
 
 
 class RegForm(QWidget):
@@ -96,7 +97,7 @@ class RegForm(QWidget):
                 db = DatabaseConnection()
                 check_user, id = db.find_user_in_database(login, password)
                 if not check_user:
-                    db.save_user_account(name, surname, login, password, height, weight, age, gender)
+                    db.save_user_account(name, surname, login, hashlib.md5(password.encode('utf-8')).hexdigest(), height, weight, age, gender)
                     self.back_to_main_window(mainwindow)
                 else:
                     self.person_login_line_edit.clear()

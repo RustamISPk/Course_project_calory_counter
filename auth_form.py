@@ -1,3 +1,5 @@
+import hashlib
+
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QWidget, QLineEdit, QPushButton
 from database_connection import DatabaseConnection
@@ -63,7 +65,7 @@ class AuthForm(QWidget):
             db = DatabaseConnection()
             login = self.login_line_edit.text()
             password = self.password_line_edit.text()
-            checker, mainwindow.current_user_id = db.find_user_in_database(login, password)
+            checker, mainwindow.current_user_id = db.find_user_in_database(login, hashlib.md5(password.encode('utf-8')).hexdigest())
             if checker:
                 mainwindow.forms_switch('food_diary')
             else:

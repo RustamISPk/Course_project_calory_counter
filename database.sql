@@ -17,7 +17,7 @@ create table if not exists user_account(
     user_name varchar(45) not null,
     user_lastname varchar(45) not null,
     user_login varchar(45) not null,
-    user_password varchar (45) not null,
+    user_password varchar (1000) not null,
     user_height int not null,
     user_birthdate date not null,
     user_gender varchar(20) not null

@@ -1,24 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d8534df5-9d79-40cc-a3b8-7f33a4a332bd" name="Changes" comment="Добавлена возможность добавления рецепта">
+    <list default="true" id="d8534df5-9d79-40cc-a3b8-7f33a4a332bd" name="Changes" comment="Доработал программу, заменил все поля в базе данных для даты с varchar на date, добавил выбор типа еды в списке еды (продукт и рецепт), добавил поиск продукта по названию, доработал дизайн, добавил проверку на &quot;дурака&quot; при регистрации, чтобы нельзя было добавить такого же пользователя (проверка по логину)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prototype.py" beforeDir="false" afterPath="$PROJECT_DIR$/Prototype.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add_product_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/add_product_form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add_recipe_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/add_recipe_form.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth_form.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database_connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/database_connection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/food_diary.py" beforeDir="false" afterPath="$PROJECT_DIR$/food_diary.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/food_list.py" beforeDir="false" afterPath="$PROJECT_DIR$/food_list.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/left_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/left_menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser/error.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/product_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/parser/product_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reg_auth_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/reg_auth_form.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reg_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/reg_form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_weight_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_weight_form.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -255,7 +244,14 @@
       <option name="project" value="LOCAL" />
       <updated>1734037085453</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Доработал программу, заменил все поля в базе данных для даты с varchar на date, добавил выбор типа еды в списке еды (продукт и рецепт), добавил поиск продукта по названию, доработал дизайн, добавил проверку на &quot;дурака&quot; при регистрации, чтобы нельзя было добавить такого же пользователя (проверка по логину)">
+      <created>1734277094479</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1734277094479</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -281,6 +277,7 @@
     <MESSAGE value="Добавлена возможность изменения данных пользователя, доработан дневник питания - исправлена проблема с дробными числами" />
     <MESSAGE value="Добавлена возможность добавления продукта" />
     <MESSAGE value="Добавлена возможность добавления рецепта" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлена возможность добавления рецепта" />
+    <MESSAGE value="Доработал программу, заменил все поля в базе данных для даты с varchar на date, добавил выбор типа еды в списке еды (продукт и рецепт), добавил поиск продукта по названию, доработал дизайн, добавил проверку на &quot;дурака&quot; при регистрации, чтобы нельзя было добавить такого же пользователя (проверка по логину)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Доработал программу, заменил все поля в базе данных для даты с varchar на date, добавил выбор типа еды в списке еды (продукт и рецепт), добавил поиск продукта по названию, доработал дизайн, добавил проверку на &quot;дурака&quot; при регистрации, чтобы нельзя было добавить такого же пользователя (проверка по логину)" />
   </component>
 </project>
