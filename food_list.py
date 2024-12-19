@@ -107,7 +107,6 @@ class FoodList(QWidget):
         self.food_to_write_widget.hide()
 
     def load_food(self, mainwindow, foods):
-        # foods = self.db.find_all_food()
         if self.food_list_widget is not None and self.list_item is not None:
             self.food_list_widget.clear()
         for food in foods:

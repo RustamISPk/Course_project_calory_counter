@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d8534df5-9d79-40cc-a3b8-7f33a4a332bd" name="Changes" comment="Доработал программу, добавил шифрование пароля">
+    <list default="true" id="d8534df5-9d79-40cc-a3b8-7f33a4a332bd" name="Changes" comment="Доработал программу">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/database_connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/database_connection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/food_list.py" beforeDir="false" afterPath="$PROJECT_DIR$/food_list.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser/error.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/reg_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/reg_form.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -258,7 +256,14 @@
       <option name="project" value="LOCAL" />
       <updated>1734278448754</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Доработал программу">
+      <created>1734297399954</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1734297399954</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -286,6 +291,7 @@
     <MESSAGE value="Добавлена возможность добавления рецепта" />
     <MESSAGE value="Доработал программу, заменил все поля в базе данных для даты с varchar на date, добавил выбор типа еды в списке еды (продукт и рецепт), добавил поиск продукта по названию, доработал дизайн, добавил проверку на &quot;дурака&quot; при регистрации, чтобы нельзя было добавить такого же пользователя (проверка по логину)" />
     <MESSAGE value="Доработал программу, добавил шифрование пароля" />
-    <option name="LAST_COMMIT_MESSAGE" value="Доработал программу, добавил шифрование пароля" />
+    <MESSAGE value="Доработал программу" />
+    <option name="LAST_COMMIT_MESSAGE" value="Доработал программу" />
   </component>
 </project>

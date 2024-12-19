@@ -71,7 +71,7 @@ class AddRecipeWidget(QWidget):
             self.add_recipe_product_label.setGeometry(QtCore.QRect(80, 110, 200, 31))
             self.add_recipe_product_label.setObjectName("add_recipe_product_label")
             self.add_recipe_product_label.setText("Продукты для рецепта:")
-            self.add_recipe_product_label.setReadOnly(True)  # Запрещаем изменение текста
+            self.add_recipe_product_label.setReadOnly(True)
             self.products_layout.addWidget(self.add_recipe_product_label)
 
         except Exception as e:
@@ -90,20 +90,17 @@ class AddRecipeWidget(QWidget):
         self.mainwindow.forms_switch(case)
 
     def load_food(self, mainwindow):
-        # print(len(self.foods))
         trash = []
         id = 0
         if len(self.foods) > 0:
             for food in mainwindow.food_list_for_recipe:
                 id += 1
                 food['id'] = id
-                # print(food)
                 if food not in trash:
                     food_card_widget = QWidget()
-                    food_card_widget.setFixedSize(250, 150)  # Установите размер карточки
+                    food_card_widget.setFixedSize(250, 150)
                     vertical_layout = QVBoxLayout(food_card_widget)
-                    vertical_layout.setContentsMargins(5, 5, 5, 5)  # Установите отступы
-
+                    vertical_layout.setContentsMargins(5, 5, 5, 5)
                     food_name_label = QLabel(food["product_name"])
                     vertical_layout.addWidget(food_name_label)
 

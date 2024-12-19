@@ -68,12 +68,10 @@ class FoodDiary(QWidget):
         meal_layout = QVBoxLayout()
 
         foods_ate = self.db.get_ate_food_by_type(mainwindow.current_user_id, meal_type)
-        # print(foods_ate)
         trash = []
 
         for food_ate in foods_ate:
             food_data = self.db.get_product_by_id(food_ate['product_id'], food_ate['eating_id'])
-            # print(food_data)
             for food in food_data:
                 food['eat_id'] = food_ate['eating_id']
                 food['product_count'] = food_ate['product_count']

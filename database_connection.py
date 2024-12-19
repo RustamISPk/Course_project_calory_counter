@@ -19,8 +19,6 @@ class DatabaseConnection:
                 database=database,
                 cursorclass=pymysql.cursors.DictCursor
             )
-            print("Successfully connected")
-            print("#" * 20)
         except Exception as ex:
             print("Connection refused...")
             print(ex)

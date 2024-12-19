@@ -36,7 +36,6 @@ class UserWeightForm(QWidget):
             self.menu_button = None
             self.IMT_widget = None
             self.db = DatabaseConnection()
-            # self.count_calory(mainwindow)
             self.setup_ui(mainwindow)
             self.load_data_for_graphic(mainwindow)
         except Exception as e:
